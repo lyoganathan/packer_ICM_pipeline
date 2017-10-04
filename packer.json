@@ -31,7 +31,7 @@
       "type": "file",
       "source": "programs/",
       "destination": "/home/vagrant"
-    }
+    },
     {
       "type": "ansible-local",
       "playbook_file": "playbook.yml",
