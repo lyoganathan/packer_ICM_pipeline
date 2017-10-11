@@ -33,6 +33,11 @@
       "destination": "/home/vagrant"
     },
     {
+      "type": "shell",
+      "script": "start.sh",
+      "execute_command": "echo 'vagrant' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'"
+    },
+    {
       "type": "ansible-local",
       "playbook_file": "playbook.yml",
       "extra_arguments": [ "--extra-vars", "ansible_sudo_pass=vagrant" ]

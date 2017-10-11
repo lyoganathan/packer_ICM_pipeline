@@ -1,7 +1,10 @@
 ICM_PIPELINE
 =============
-Ubuntu 16.04 virtual machine loaded with neuroimaging software created using packer and ansible. Branches contain starting server iso, with desktop iso and amazon ec2 ami
-----------------------------------------------------------------------------
+Ubuntu 16.04 virtual machine loaded with neuroimaging software
+--------------------------------------------------------------------------------
+Download link:
+[ICM_PIPELINE.ova](https://drive.google.com/file/d/0B8U1bxkyNu87RWtnUU8xeUVldm8/view?usp=sharing)
+
 Current Software:
 - Freesurfer 6.0
 - FSL 5.0
@@ -9,7 +12,7 @@ Current Software:
 - ITK Snap
 - mricron
 
-###### This readme is about building the VM (packer, ansible, vagrant, preseeding etc.) & current issues ######
+#### This readme is about building the VM (packer, ansible, vagrant, preseeding etc.) & current issues ####
 
 1. For info about the ICM pipeline: Under Construction
 2. For instructions on installing the VM: *Read INSTALL*
