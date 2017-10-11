@@ -1,6 +1,8 @@
 #Ansible playbook for setting up ubuntu-desktop, freesurfer 6.0, and FSL & ITK Snap
 ---
 - hosts: all
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   become: yes
   tasks:
   - name: Source neurodebian
@@ -16,15 +18,23 @@
     register: kill_result
     failed_when: kill_result.rc > 1 # rc == 1 if the script is inactive
     changed_when: kill_result.rc == 0
+  - name: Install ubuntu-desktop
+    apt:
+      name: ubuntu-desktop
+      state: present
+      update_cache: yes
+    register: task_result
+    until: task_result|succeeded
+    retries: 5
+    delay: 3
+    ignore_errors: yes
   - name: update apt
     command: "apt-get update"
-  - name: Install ubuntu-desktop and FSL
+  - name: Install FSL
     apt:
       name: '{{ item }}'
       state: present
-      update_cache: yes
     with_items:
-      - ubuntu-desktop
       - fsl-complete
   - name: Install ITK snap
     command: "tar -C /usr/local -zxvf /home/vagrant/itksnap-3.6.0-20170401-Linux-x86_64.tar.gz"
