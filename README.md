@@ -1,9 +1,9 @@
-ICM_PIPELINE
-=============
+ICM_PIPELINE (VirtualBox)
+=========================
 Ubuntu 16.04 virtual machine loaded with neuroimaging software
-
-There are 2 branches, one is using packer to build a virtualbox VM and the other is to build an AMI for AWS
 --------------------------------------------------------------------------------
+There are 2 branches, one is using packer to build a VirtualBox VM and the other is to build an AMI for AWS
+
 Download link:
 [ICM_PIPELINE.ova](https://drive.google.com/file/d/0B8U1bxkyNu87RWtnUU8xeUVldm8/view?usp=sharing)
 
@@ -35,7 +35,7 @@ Packer allows creating of a virtual machine from an installation ISO (Ubuntu 16.
 
 Although I won't elaborate too much on packer and ansible, this is just how my scripts work incase anyone wants to play around and make there own VMs, and also some problems I ran into & things I am improving.
 
-A windows machine cannot be a control machine! You have to use ansible local (installs anisble on guest) from a windows host, and packer doesn't install ansible automatically on guest VM, so we have to preseed it or use shell scripts. I preseeded.
+A windows machine cannot be a control machine! You have to use ansible local (installs anisble on guest) from a windows host, and packer doesn't install ansible automatically on guest VM, so we have to preseed it or use shell scripts. I used shell scripts but i think preseeding might be better if I can get it to work.
 
 You can't preseed a ubuntu desktop image with d-i. You have to use something called ubiquity (I think). So you have to start with a server image, install linux-generic kernel (as opposed to linux-server kernel), and then install the ubuntu-desktop package. For some reason, when i use ubuntu-desktop in tasksel, the install completes, but no ubuntu-desktop is there. If I run taskel in that VM, I see no ubuntu-desktop. When i run it
 
@@ -48,5 +48,9 @@ Hopefully can find out how to run on a cluster for super fast neuroimaging analy
 
 
 packer.json: packer config file
+
 playbook.yml: ansible playbook file
+
+start.sh: Installs Ansible
+
 clean.sh: Deletes installers and also sets up .bashrc and .bash_aliases
