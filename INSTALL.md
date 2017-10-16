@@ -1,6 +1,6 @@
 #Installing ICM_PIPELINE on VirtualBox
 
-Download the .ova file: 
+Download the .ova file:
 [ICM_PIPELINE.ova](https://drive.google.com/file/d/0B8U1bxkyNu87RWtnUU8xeUVldm8/view?usp=sharing)
 
 Install Instructions:
@@ -20,3 +20,5 @@ For some reason, this never goes smoothly...
 5. Now for shared folders
 
 Here's an SO post discussing some problems and usually one of them will fix your problem:
+
+https://stackoverflow.com/questions/28328775/virtualbox-mount-vboxsf-mounting-failed-with-the-error-no-such-device
