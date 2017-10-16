@@ -1,4 +1,3 @@
-#Ansible playbook for setting up ubuntu-desktop, freesurfer 6.0, and FSL & ITK Snap
 ---
 - hosts: all
   vars:
@@ -23,21 +22,29 @@
       name: ubuntu-desktop
       state: present
       update_cache: yes
-    register: task_result
-    until: task_result|succeeded
-    retries: 5
-    delay: 3
-    ignore_errors: yes
-  - name: update apt
-    command: "apt-get update"
   - name: Install FSL
     apt:
       name: '{{ item }}'
       state: present
     with_items:
       - fsl-complete
-  - name: Install ITK snap
-    command: "tar -C /usr/local -zxvf /home/vagrant/itksnap-3.6.0-20170401-Linux-x86_64.tar.gz"
+  - name: Download latest stable version of freesurfer
+    get_url:
+      url: 'ftp://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/6.0.0/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz'
+      dest: '/home/ubuntu/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz'
+      validate_certs: no
   - name: Install freesurfer
-    command: "tar -C /usr/local -xzvf /home/vagrant/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz"
+    command: "tar -C /usr/local -xzvf /home/ubuntu/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz"
+  - name: Download mricron
+    get_url:
+      url: 'https://www.nitrc.org/frs/download.php/9322/lx.zip//?i_agree=1&download_now=1'
+      dest: '/home/ubuntu/lx.zip'
+  - name: Install mricron
+    command: "unzip /home/ubuntu/lx.zip -d /home/ubuntu"
+  - name: Download ITK-SNAP
+    get_url:
+      url: 'https://downloads.sourceforge.net/project/itk-snap/itk-snap/3.6.0/itksnap-3.6.0-20170401-Linux-x86_64.tar.gz?r=http%3A%2F%2Fwww.itksnap.org%2Fdownload%2Fsnap%2Fprocess.php%3Flink%3D9997%26root%3Dnitrc&ts=1508129189&use_mirror=phoenixnap'
+      dest: '/home/ubuntu/itksnap-3.6.0-20170401-Linux-x86_64.tar.gz'
+  - name: Install ITK snap
+    command: "tar -C /usr/local -zxvf /home/ubuntu/itksnap-3.6.0-20170401-Linux-x86_64.tar.gz"
 ...
