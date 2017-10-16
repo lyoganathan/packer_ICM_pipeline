@@ -1,6 +1,8 @@
 ICM_PIPELINE
 =============
 Ubuntu 16.04 virtual machine loaded with neuroimaging software
+
+There are 2 branches, one is using packer to build a virtualbox VM and the other is to build an AMI for AWS
 --------------------------------------------------------------------------------
 Download link:
 [ICM_PIPELINE.ova](https://drive.google.com/file/d/0B8U1bxkyNu87RWtnUU8xeUVldm8/view?usp=sharing)
@@ -16,7 +18,6 @@ Current Software:
 
 1. For info about the ICM pipeline: Under Construction
 2. For instructions on installing the VM: *Read INSTALL*
-3. If you are familiar with vagrant check out: Download the vagrant box: (has software, but not yet provisioned, mostly for testing ansible and finding/fixing glitches fast)
 
 There are more READMEs in the subdirectories (vagrant, packer) that have more info about problems as well as cool usage
 
