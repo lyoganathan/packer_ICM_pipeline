@@ -1,0 +1,26 @@
+[aws]
+aws_access_key_id = your_access_key
+aws_secret_access_key = your_secret_key
+aws_region_name = us-east-1
+
+[cluster freecluster]
+compute_instance_type = t2.small
+master_instance_type = t2.micro
+key_name = bruh
+vpc_settings = public
+s3_read_write_resource = arn:aws:s3:::killa7*
+username = ubuntu
+custom_ami = ami-b764c4cd
+base_os = ubuntu1404
+initial_queue_size = 15
+max_queue_size = 20
+master_root_volume_size = 30
+compute_root_volume_size = 30
+
+[vpc public]
+vpc_id = vpc-00c50a78
+master_subnet_id = subnet-e7f729ac
+
+[global]
+cluster_template = freecluster
+sanity_check = true
