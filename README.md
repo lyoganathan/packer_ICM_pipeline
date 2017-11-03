@@ -1,39 +1,55 @@
 ICM_PIPELINE (AMI)
 =========================
-Ubuntu 16.04 virtual machine loaded with neuroimaging software
+Ubuntu 16.04 virtual machine loaded with neuroimaging software, available as a public amazon machine image that works with cfncluster
 --------------------------------------------------------------------------------
 There are 2 branches, one is using packer to build an AMI for AWS and the other is building a VirtualBox VM
 
-#### AMI ID: ami-ba7fa8c0 ####
-#### Region: US East North Virginia ####
+#### AMI ID: ami-b764c4cd ####
+#### Username: ubuntu ####
+#### Region: US East North Virginia (us-east-1) ####
 
 Current Software:
-- Freesurfer 6.0
-- FSL 5.0
-- ITK Snap
-- mricron
+- [Freesurfer 6.0](https://surfer.nmr.mgh.harvard.edu/)
+- [FSL 5.0](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki)
+- [ITK Snap](http://www.itksnap.org/pmwiki/pmwiki.php)
+- [mricron](http://people.cas.sc.edu/rorden/mricron/index.html)
+- [aws cli](https://aws.amazon.com/cli/)
+- [cfncluster](http://cfncluster.readthedocs.io/en/latest/) compatible
 
-#### This readme is about building the VM (packer, ansible, AWS stuff) & current issues ####
+##### Getting the VM working on your AWS account: #####
+- Go to Launch EC2 instance
+- Search for the ami id: ami-b764c4cd
+- Launch and get ssh keys. Login in using putty or mobaxterm with ssh key and username as ubuntu
 
-1. For info about the ICM pipeline: _Under Construction_
-2. For instructions on getting the VM working on your AWS account: _Under Construction_
+Sample script to download subjects from S3 and then run recon-all on them
 
+```
+#!/bin/bash
+#$ -S /bin/bash
 
-Issues:
-- Have to manually update cryptography with pip?
-- How to install mipav?
+for path in $(aws s3 ls s3://killa7/subjects/); do
+  if [[ $path == exam* ]]; then
+    loc[i]=$path
+    ((i++))
+  fi
+done
 
-Packer allows creating of a virtual machine from an installation ISO (Ubuntu 16.04 server in this case), and can also build into several VM formats, such as AMI, which can then be deployed in an EC2 instance.
+SUBJECTS_DIR='/home/ubuntu/Documents/subjects'
+mkdir ~/Documents
+mkdir ~/Documents/subjects/
+mkdir ~/Documents/subjects/nii${loc[$(($SGE_TASK_ID-1))]}
+aws s3 sync s3://killa7/subjects/${loc[$(($SGE_TASK_ID-1))]} ~/Documents/subjects/nii${loc[$(($SGE_TASK_ID-1))]}
+recon-all -i $SUBJECTS_DIR/nii${loc[$(($SGE_TASK_ID-1))]}/T1W.nii -subjid ${loc[$(($SGE_TASK_ID-1))]}
+mv $SUBJECTS_DIR/nii${loc[$(($SGE_TASK_ID-1))]} $SUBJECTS_DIR/${loc[$(($SGE_TASK_ID-1))]}
 
-Although I won't elaborate too much on packer and ansible, this is just how my scripts work incase anyone wants to play around and make there own VMs, and also some problems I ran into & things I am improving.
+recon-all -all -subjid ${loc[$(($SGE_TASK_ID-1))]}
 
-A windows machine cannot be a control machine! You have to use ansible local (installs anisble on guest) from a windows host, and packer doesn't install ansible automatically on guest VM, so we have to preseed it or use shell scripts. I used shell scripts but i think preseeding might be better if I can get it to work.
+aws s3 sync ~/Documents/subjects/ s3://killa7/subjects/
+rm -rf ~/Documents/subjects/${loc[$(($SGE_TASK_ID-1))]}
 
+```
+Submitting this job with qsub:
 
-packer.json: packer config file
-
-playbook.yml: ansible playbook file
-
-start.sh: Installs Ansible
-
-clean.sh: Deletes installers and also sets up .bashrc and .bash_aliases
+```
+qsub -V -t 1:25 example.sh
+```
