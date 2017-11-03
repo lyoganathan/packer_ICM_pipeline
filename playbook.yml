@@ -17,11 +17,14 @@
     register: kill_result
     failed_when: kill_result.rc > 1 # rc == 1 if the script is inactive
     changed_when: kill_result.rc == 0
-  - name: Install ubuntu-desktop
+  - name: Install kubuntu-desktop
     apt:
-      name: ubuntu-desktop
+      name: kubuntu-desktop
       state: present
       update_cache: yes
+  - name: Install CFNcluster (includes AWS-CLI)
+    pip:
+      name: cfncluster
   - name: Install FSL
     apt:
       name: '{{ item }}'
