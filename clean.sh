@@ -11,6 +11,14 @@ echo "export FREESURFER_HOME=/usr/local/freesurfer" >> .bashrc
 echo "source \$FREESURFER_HOME/SetUpFreeSurfer.sh" >> .bashrc
 echo "source /etc/fsl/5.0/fsl.sh" >> .bashrc
 
+#FreeSurfer License
+echo "yoganal@mcmaster.ca" > license.txt
+echo "33146" >> license.txt
+echo "*Cn3LAjPVSRAA" >> license.txt
+echo "FSa6Z.qTzw6X6" >> license.txt
+sudo su
+mv licence.txt /usr/local/freesurfer/
+
 #Remove setup programs in /home/vagrant
 rm /home/ubuntu/*.gz
 rm /home/ubuntu/*.zip
