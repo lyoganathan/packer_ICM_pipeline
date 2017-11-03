@@ -1,6 +1,6 @@
 {
   "variables": {
-    "aws_access_key": "your_aws_access_Key",
+    "aws_access_key": "your_aws_access_key",
     "aws_secret_key": "your_aws_secret_key"
   },
   "builders": [{
@@ -8,9 +8,9 @@
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "us-east-1",
-    "source_ami": "ami-cd0f5cb6",
+    "source_ami": "ami-8c9fc59a",
     "instance_type": "t2.micro",
-    "ami_name": "ICM_PIPELINE",
+    "ami_name": "ICM_PIPELINE_V4",
     "ssh_username": "ubuntu",
     "launch_block_device_mappings": [{
       "device_name": "/dev/sda1",
@@ -23,15 +23,16 @@
     {
       "type": "shell",
       "script": "start.sh",
-      "execute_command": "echo 'vagrant' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'"
+      "execute_command": "sudo -S sh -c '{{ .Vars }} {{ .Path }}'"
     },
     {
       "type": "ansible-local",
-      "playbook_file": "play.yml"
+      "playbook_file": "playbook.yml"
     },
     {
       "type": "shell",
-      "script": "clean.sh"
+      "script": "clean.sh",
+      "execute_command": "sudo -S sh -c '{{ .Vars }} {{ .Path }}'"
     }
   ]
 }
