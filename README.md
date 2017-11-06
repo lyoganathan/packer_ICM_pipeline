@@ -19,14 +19,18 @@ Current Software:
 
 #### How to set up on VirtualBox ####
 
-1. Install [VirtualBox](https://www.virtualbox.org/)
-2. Download the ICM_PIPELINE ova file
-3. Go to File -> Import Appliance. Choose the ICM_PIPELINE.ova file
-![](imgs/1.jpg)
-4. You can change memory and CPUs by double-clicking in those fields
-![](imgs/2.jpg)
-5. Wait for it to finish importing
-6. Launch your Virtual Machine!
+- Install [VirtualBox](https://www.virtualbox.org/)
+- Download the ICM_PIPELINE ova file
+- Go to File -> Import Appliance. Choose the ICM_PIPELINE.ova file
+
+![](imgs/1.JPG)
+
+- You can change memory and CPUs by double-clicking in those fields
+
+![](imgs/2.JPG)
+
+- Wait for it to finish importing
+- Launch your Virtual Machine!
 
 #### Installing Guest Additions: ####
 For some reason, this never goes smoothly...
