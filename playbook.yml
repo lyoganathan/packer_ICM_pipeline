@@ -18,16 +18,6 @@
     register: kill_result
     failed_when: kill_result.rc > 1 # rc == 1 if the script is inactive
     changed_when: kill_result.rc == 0
-  - name: Install ubuntu-desktop
-    apt:
-      name: ubuntu-desktop
-      state: present
-      update_cache: yes
-    register: task_result
-    until: task_result|succeeded
-    retries: 5
-    delay: 3
-    ignore_errors: yes
   - name: update apt
     command: "apt-get update"
   - name: Install FSL

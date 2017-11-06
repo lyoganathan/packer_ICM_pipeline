@@ -3,9 +3,11 @@
 Download the .ova file:
 [ICM_PIPELINE.ova](https://drive.google.com/file/d/0B8U1bxkyNu87RWtnUU8xeUVldm8/view?usp=sharing)
 
+Make sure you have virtualbox set up
+
 Install Instructions:
 1. Download the .ova file
-2. Download virtualbox and get it setup
+2. Open VirtualBox
 3. Go to File -> Import Appliance
 4. Select the ICM_PIPELINE.ova file
 5. Can change CPU and memory

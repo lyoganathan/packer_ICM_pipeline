@@ -33,6 +33,17 @@ Problems still need fixing or looking into:
 
 Packer allows creating of a virtual machine from an installation ISO (Ubuntu 16.04 server in this case), and can also build into several VM formats, such as AMI, which can then be deployed in an EC2 instance.
 
+Ubuntu-server iso boot command is:
+```
+file=/cdrom/preseed/ubuntu-server.seed vga=788 initrd=install/initrd.gz quiet ---
+```
+
+Ubuntu-desktop iso boot command is
+
+```
+file=/cdrom/preseed/ubuntu.seed boot=casper initrd=casper/initrd.lz quiet splash ---
+```
+
 Although I won't elaborate too much on packer and ansible, this is just how my scripts work incase anyone wants to play around and make there own VMs, and also some problems I ran into & things I am improving.
 
 A windows machine cannot be a control machine! You have to use ansible local (installs anisble on guest) from a windows host, and packer doesn't install ansible automatically on guest VM, so we have to preseed it or use shell scripts. I used shell scripts but i think preseeding might be better if I can get it to work.
