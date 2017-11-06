@@ -23,13 +23,11 @@ There are more READMEs in the subdirectories (vagrant, packer) that have more in
 
 So, I used a windows machine to do all this, bad idea. after a lot of t(rial)error, managed to get it to work.
 
-Problems still need fixing or looking into:
-- Preseeding ubuntu-desktop?? Or starting with desktop ISO? Would be super useful because a lot of programs are GUI-based and their installation require this, currently fails when put into tasksel or pkgsel in preeseed, so using ansible
-- Preseed fails at Select and install hardware? Same preseed can succeed and fail at this step. Maybe can't go online to download new packages?, But mirrors work and when i am disconnected from internet i get different error, so probs firewall?
-- SO MANY ANSIBLE PROBLEMS !
+- Preseed fails at Select and install hardware? Same preseed can succeed and fail at this step. Maybe can't go online to download new packages?, But mirrors work and when i am disconnected from internet i get different error, so probs firewall? - Pretty sure this is because of dpkg lock caused by unattended-upgrade or possibly something else
+- ANSIBLE PROBLEMS
   - using apt_repo for sourcing neurodebian fails
   - Installing ubuntu desktop without update_cache fails
-  - Stops when some of FSLs installs don't work?? But if I boot up VM and run in terminal I will get output that some installs failed and it will still complete (yielding a working FSL). Conversly, ansible destroys the VM.
+  - Sometimes all of FSL dosen't download an install, so packer exits. Same with ubuntu desktop. Solution was to keep repeating untill succcesful
 
 Packer allows creating of a virtual machine from an installation ISO (Ubuntu 16.04 server in this case), and can also build into several VM formats, such as AMI, which can then be deployed in an EC2 instance.
 
@@ -65,3 +63,16 @@ playbook.yml: ansible playbook file
 start.sh: Installs Ansible
 
 clean.sh: Deletes installers and also sets up .bashrc and .bash_aliases
+
+
+
+```
+ubiquity ubiquity/success_command \
+    string echo vagrant | sudo -S chown vagrant /etc/network/interfaces; \
+           echo "yo" > /home/vagrant/Desktop/yo.txt; \
+           echo "auto enp0s3" >> /etc/network/interfaces; \
+           echo "iface enp0s3 inet dhcp" >> /etc/network/interfaces; \
+           ifup enp0s3; \
+           apt-get update -y; \
+           in-target apt-get install -y openssh-server;
+```
