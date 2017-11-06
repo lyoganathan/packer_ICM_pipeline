@@ -2,7 +2,10 @@ ICM_PIPELINE (VirtualBox)
 =========================
 Ubuntu 16.04 virtual machine loaded with neuroimaging software
 --------------------------------------------------------------------------------
-There are 2 branches, one is using packer to build a VirtualBox VM and the other is to build an AMI for AWS
+There are 3 branches:
+- **master:** Using *ubuntu-server iso* and building a VirtualBox .ova using packer
+- **using_desktop_iso:** Using *ubuntu-desktop iso* to build VirtualBox .ova using packer
+- **ami_aws:** Using packer to build an AMI
 
 Download link:
 [ICM_PIPELINE.ova](https://drive.google.com/file/d/0B8U1bxkyNu87RWtnUU8xeUVldm8/view?usp=sharing)
@@ -14,18 +17,38 @@ Current Software:
 - ITK Snap
 - mricron
 
-#### This readme is about building the VM (packer, ansible, vagrant, preseeding etc.) & current issues ####
+#### How to set up on VirtualBox ####
 
-1. For info about the ICM pipeline: Under Construction
-2. For instructions on installing the VM: *Read INSTALL*
+1. Install [VirtualBox](https://www.virtualbox.org/)
+2. Download the ICM_PIPELINE ova file
+3. Go to File -> Import Appliance. Choose the ICM_PIPELINE.ova file
+![](imgs/1.jpg)
+4. You can change memory and CPUs by double-clicking in those fields
+![](imgs/2.jpg)
+5. Wait for it to finish importing
+6. Launch your Virtual Machine!
 
-There are more READMEs in the subdirectories (vagrant, packer) that have more info about problems as well as cool usage
+#### Installing Guest Additions: ####
+For some reason, this never goes smoothly...
 
-So, I used a windows machine to do all this, bad idea. after a lot of t(rial)error, managed to get it to work.
+1. With a launched VM, click on Devices -> Insert guest additions CD
+2. mount /dev/cdrom /media
+3. apt-get install dkms build-essential linux-headers-generic
+4. If not automatically prompted, run sudo sh /media/cdrom/VBoxLinuxAdditions.run
 
-Problems still need fixing or looking into:
+Here's an SO post discussing some problems and usually one of them will fix your problem:
+
+https://stackoverflow.com/questions/28328775/virtualbox-mount-vboxsf-mounting-failed-with-the-error-no-such-device
+
+
+
+
+
+#### Other Things ####
+
+Problems still need fixing and possible upgrades:
 - Preseeding ubuntu-desktop?? Or starting with desktop ISO? Would be super useful because a lot of programs are GUI-based and their installation require this, currently fails when put into tasksel or pkgsel in preeseed, so using ansible
-- Preseed fails at Select and install hardware? Same preseed can succeed and fail at this step. Maybe can't go online to download new packages?, But mirrors work and when i am disconnected from internet i get different error, so probs firewall?
+- Preseed fails at Select and install hardware? Same preseed can succeed and fail at this step. Maybe can't go online to download new packages?, But mirrors work and when i am disconnected from internet i get different error, so probs firewall? For ubuntu-desktop iso 16.04 problem seems to be network is turned off the stage before running dpkg.
 - SO MANY ANSIBLE PROBLEMS !
   - using apt_repo for sourcing neurodebian fails
   - Installing ubuntu desktop without update_cache fails
@@ -33,24 +56,12 @@ Problems still need fixing or looking into:
 
 Packer allows creating of a virtual machine from an installation ISO (Ubuntu 16.04 server in this case), and can also build into several VM formats, such as AMI, which can then be deployed in an EC2 instance.
 
-Although I won't elaborate too much on packer and ansible, this is just how my scripts work incase anyone wants to play around and make there own VMs, and also some problems I ran into & things I am improving.
-
 A windows machine cannot be a control machine! You have to use ansible local (installs anisble on guest) from a windows host, and packer doesn't install ansible automatically on guest VM, so we have to preseed it or use shell scripts. I used shell scripts but i think preseeding might be better if I can get it to work.
 
-You can't preseed a ubuntu desktop image with d-i. You have to use something called ubiquity (I think). So you have to start with a server image, install linux-generic kernel (as opposed to linux-server kernel), and then install the ubuntu-desktop package. For some reason, when i use ubuntu-desktop in tasksel, the install completes, but no ubuntu-desktop is there. If I run taskel in that VM, I see no ubuntu-desktop. When i run it
+You can't preseed a ubuntu desktop image the same as ubuntu server. You have to include some ubiquity commands as well. Of course, you can also install ubuntu-desktop ontop of ubuntu server. You can try including this in preseed:
 
 ```
 d-i pkgsel/include ubuntu-desktop
 ```
-I get a software install error and VM dosen't build succesfully. Solution? Provision it in later with ansible.
-Okay so you can check out the preseed (check out preseed README for info on stuff like boot-command), read over packer documentation & ansible documentation.
-Hopefully can find out how to run on a cluster for super fast neuroimaging analysis.
 
-
-packer.json: packer config file
-
-playbook.yml: ansible playbook file
-
-start.sh: Installs Ansible
-
-clean.sh: Deletes installers and also sets up .bashrc and .bash_aliases
+But I got a software install error and VM dosen't build succesfully. Solution? Provision it in later with ansible.
