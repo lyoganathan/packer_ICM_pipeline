@@ -18,7 +18,14 @@ Current Software:
 
 ##### Getting the VM working on your AWS account: #####
 - Go to Launch EC2 instance
+
+![](imgs/aws1.JPG)
+
 - Search for the ami id: ami-b764c4cd
+
+![](imgs/aws2.JPG)
+
+
 - Launch and get ssh keys. Login in using putty or mobaxterm with ssh key and username as ubuntu
 
 Sample script to download subjects from S3 and then run recon-all on them
