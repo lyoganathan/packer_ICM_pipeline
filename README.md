@@ -17,7 +17,7 @@ Current Software:
 - ITK Snap
 - mricron
 
-#### How to set up on VirtualBox ####
+## How to set up on VirtualBox ##
 
 - Install [VirtualBox](https://www.virtualbox.org/)
 - Download the ICM_PIPELINE ova file
@@ -29,10 +29,9 @@ Current Software:
 
 ![](imgs/2.JPG)
 
-- Wait for it to finish importing
-- Launch your Virtual Machine!
+- Wait for it to finish importing & launch your Virtual Machine
 
-#### Installing Guest Additions: ####
+## Installing Guest Additions: ##
 For some reason, this never goes smoothly...
 
 1. With a launched VM, click on Devices -> Insert guest additions CD
@@ -48,7 +47,7 @@ https://stackoverflow.com/questions/28328775/virtualbox-mount-vboxsf-mounting-fa
 
 
 
-#### Other Things ####
+### Other Things ###
 
 Problems still need fixing and possible upgrades:
 - Preseeding ubuntu-desktop?? Or starting with desktop ISO? Would be super useful because a lot of programs are GUI-based and their installation require this, currently fails when put into tasksel or pkgsel in preeseed, so using ansible
@@ -68,4 +67,4 @@ You can't preseed a ubuntu desktop image the same as ubuntu server. You have to 
 d-i pkgsel/include ubuntu-desktop
 ```
 
-But I got a software install error and VM dosen't build succesfully. Solution? Provision it in later with ansible.
+But I got a software install error and VM dosen't build succesfully. Solution? Provision ubuntu-desktop in later with ansible.
