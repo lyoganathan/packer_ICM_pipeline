@@ -52,7 +52,7 @@ https://stackoverflow.com/questions/28328775/virtualbox-mount-vboxsf-mounting-fa
 Problems still need fixing and possible upgrades:
 - Preseeding ubuntu-desktop?? Or starting with desktop ISO? Would be super useful because a lot of programs are GUI-based and their installation require this, currently fails when put into tasksel or pkgsel in preeseed, so using ansible
 - Preseed fails at Select and install hardware? Same preseed can succeed and fail at this step. Maybe can't go online to download new packages?, But mirrors work and when i am disconnected from internet i get different error, so probs firewall? For ubuntu-desktop iso 16.04 problem seems to be network is turned off the stage before running dpkg.
-- SO MANY ANSIBLE PROBLEMS !
+- Ansible Problems:
   - using apt_repo for sourcing neurodebian fails
   - Installing ubuntu desktop without update_cache fails
   - Stops when some of FSLs installs don't work?? But if I boot up VM and run in terminal I will get output that some installs failed and it will still complete (yielding a working FSL). Conversly, ansible destroys the VM.
