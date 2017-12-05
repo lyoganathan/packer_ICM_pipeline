@@ -2,69 +2,54 @@ ICM_PIPELINE (VirtualBox)
 =========================
 Ubuntu 16.04 virtual machine loaded with neuroimaging software
 --------------------------------------------------------------------------------
-There are 3 branches:
+There are 4 branches:
 - **master:** Using *ubuntu-server iso* and building a VirtualBox .ova using packer
 - **using_desktop_iso:** Using *ubuntu-desktop iso* to build VirtualBox .ova using packer
 - **ami_aws:** Using packer to build an AMI
+- **docker:** Using packer to build a container with docker toolbox
 
-Download link:
-[ICM_PIPELINE.ova](https://drive.google.com/file/d/0B8U1bxkyNu87RWtnUU8xeUVldm8/view?usp=sharing)
+#docker.io/lyoganathan/icmpipeline
 
 Current Software:
 - Freesurfer 6.0
 - FSL 5.0
-- MIPAV
 - ITK Snap
 - mricron
 
-## How to set up on VirtualBox ##
+## How to run Container ##
 
-- Install [VirtualBox](https://www.virtualbox.org/)
-- Download the ICM_PIPELINE ova file
-- Go to File -> Import Appliance. Choose the ICM_PIPELINE.ova file
+- Install Docker or Docker Toolbox. If on windows and not Windows 10 enterprise/professional, you will have to get Docker Toolbox, which works fine for me. I think the difference is docker toolbox requires virtualbox, wheres Docker uses Hyper-V.
+- Download the container: if you do
+```
+docker run lyoganathan/icmpipeline:v2
+```
+it should download the container locally.
 
-![](imgs/1.JPG)
-
-- You can change memory and CPUs by double-clicking in those fields
-
-![](imgs/2.JPG)
-
-- Wait for it to finish importing & launch your Virtual Machine
-
-## Installing Guest Additions: ##
-For some reason, this never goes smoothly...
-
-1. With a launched VM, click on Devices -> Insert guest additions CD
-2. mount /dev/cdrom /media
-3. apt-get install dkms build-essential linux-headers-generic
-4. If not automatically prompted, run sudo sh /media/cdrom/VBoxLinuxAdditions.run
-
-Here's an SO post discussing some problems and usually one of them will fix your problem:
-
-https://stackoverflow.com/questions/28328775/virtualbox-mount-vboxsf-mounting-failed-with-the-error-no-such-device
+## Using Container on AWS ##
 
 
+## Problems with Packer ##
 
+File upload from packer dosen't work. aka can't upload freesurfer, itksnap etc... have to download...
 
+#Copy files: mricron should be good,
 
-### Other Things ###
+WORKDIR /home/ubuntu
+ADD ./programs /home/ubuntu
 
-Problems still need fixing and possible upgrades:
-- Preseeding ubuntu-desktop?? Or starting with desktop ISO? Would be super useful because a lot of programs are GUI-based and their installation require this, currently fails when put into tasksel or pkgsel in preeseed, so using ansible
-- Preseed fails at Select and install hardware? Same preseed can succeed and fail at this step. Maybe can't go online to download new packages?, But mirrors work and when i am disconnected from internet i get different error, so probs firewall? For ubuntu-desktop iso 16.04 problem seems to be network is turned off the stage before running dpkg.
-- Ansible Problems:
-  - using apt_repo for sourcing neurodebian fails
-  - Installing ubuntu desktop without update_cache fails
-  - Stops when some of FSLs installs don't work?? But if I boot up VM and run in terminal I will get output that some installs failed and it will still complete (yielding a working FSL). Conversly, ansible destroys the VM.
-
-Packer allows creating of a virtual machine from an installation ISO (Ubuntu 16.04 server in this case), and can also build into several VM formats, such as AMI, which can then be deployed in an EC2 instance.
-
-A windows machine cannot be a control machine! You have to use ansible local (installs anisble on guest) from a windows host, and packer doesn't install ansible automatically on guest VM, so we have to preseed it or use shell scripts. I used shell scripts but i think preseeding might be better if I can get it to work.
-
-You can't preseed a ubuntu desktop image the same as ubuntu server. You have to include some ubiquity commands as well. Of course, you can also install ubuntu-desktop ontop of ubuntu server. You can try including this in preseed:
+How to build a VM with more diskpace:
+Run in DockerToolbox
 
 ```
-d-i pkgsel/include ubuntu-desktop
+docker-machine rm default
+docker-machine create -d virtualbox --virtualbox-disk-size "100000" default
 ```
 
-But I got a software install error and VM dosen't build succesfully. Solution? Provision ubuntu-desktop in later with ansible.
+#Running with graphs (X server on windows Host)
+docker run -it \
+    -e DISPLAY=<IP.Address.For.VirtualBox.IPv4>:0
+Also edit your X0.hosts file in Program Files\Xming\X0.hosts with admin privileges to include your docker toolbox ID. (Different from above!)
+
+#Removing Containers
+docker rm $(docker ps -a -f status=exited -q)
+#Removing Images
