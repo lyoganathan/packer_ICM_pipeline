@@ -2,7 +2,6 @@ ICM_PIPELINE (AMI)
 =========================
 Ubuntu 16.04 virtual machine loaded with neuroimaging software, available as a public amazon machine image that works with cfncluster
 --------------------------------------------------------------------------------
-There are 2 branches, one is using packer to build an AMI for AWS and the other is building a VirtualBox VM
 
 #### AMI ID: ami-b764c4cd ####
 #### Username: ubuntu ####
