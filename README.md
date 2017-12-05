@@ -8,7 +8,7 @@ There are 4 branches:
 - **ami_aws:** Using packer to build an AMI
 - **docker:** Using packer to build a container with docker toolbox
 
-#docker.io/lyoganathan/icmpipeline
+# docker.io/lyoganathan/icmpipeline
 
 Current Software:
 - Freesurfer 6.0
@@ -25,19 +25,20 @@ docker run lyoganathan/icmpipeline:v2
 ```
 it should download the container locally.
 
-## Using Container on AWS ##
+### Using Container on AWS ###
 
 
-## Problems with Packer ##
+### Problems with Packer ###
 
 File upload from packer dosen't work. aka can't upload freesurfer, itksnap etc... have to download...
 
-#Copy files: mricron should be good,
+### Copy files: ###
+Instead of downloading freesurfer & itksnap, copy them from local and unzip them in dockerfile
 
 WORKDIR /home/ubuntu
 ADD ./programs /home/ubuntu
 
-How to build a VM with more diskpace:
+### How to build a VM with more diskpace: ###
 Run in DockerToolbox
 
 ```
@@ -45,11 +46,11 @@ docker-machine rm default
 docker-machine create -d virtualbox --virtualbox-disk-size "100000" default
 ```
 
-#Running with graphs (X server on windows Host)
+# Running with graphics (X server on windows Host) #
 docker run -it \
     -e DISPLAY=<IP.Address.For.VirtualBox.IPv4>:0
 Also edit your X0.hosts file in Program Files\Xming\X0.hosts with admin privileges to include your docker toolbox ID. (Different from above!)
 
-#Removing Containers
+#### Removing Containers ####
 docker rm $(docker ps -a -f status=exited -q)
-#Removing Images
+#### Removing Images ####
