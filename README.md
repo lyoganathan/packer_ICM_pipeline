@@ -2,10 +2,11 @@ ICM_PIPELINE (VirtualBox)
 =========================
 Ubuntu 16.04 virtual machine loaded with neuroimaging software
 --------------------------------------------------------------------------------
-There are 3 branches:
+There are 4 branches:
 - **master:** Using *ubuntu-server iso* and building a VirtualBox .ova using packer
 - **using_desktop_iso:** Using *ubuntu-desktop iso* to build VirtualBox .ova using packer
 - **ami_aws:** Using packer to build an AMI
+- **docker:** Using Docker to build a container
 
 Download link:
 [ICM_PIPELINE.ova](https://drive.google.com/file/d/0B8U1bxkyNu87RWtnUU8xeUVldm8/view?usp=sharing)
