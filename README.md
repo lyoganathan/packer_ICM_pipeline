@@ -1,6 +1,6 @@
-ICM_PIPELINE (VirtualBox)
+ICM_PIPELINE (Docker)
 =========================
-Ubuntu 16.04 virtual machine loaded with neuroimaging software
+Ubuntu 16.04 container loaded with neuroimaging software
 --------------------------------------------------------------------------------
 There are 4 branches:
 - **master:** Using *ubuntu-server iso* and building a VirtualBox .ova using packer
@@ -8,7 +8,7 @@ There are 4 branches:
 - **ami_aws:** Using packer to build an AMI
 - **docker:** Using packer to build a container with docker toolbox
 
-# docker.io/lyoganathan/icmpipeline
+## docker.io/lyoganathan/icmpipeline
 
 Current Software:
 - Freesurfer 6.0
@@ -25,7 +25,7 @@ docker run lyoganathan/icmpipeline:v2
 ```
 it should download the container locally.
 
-### Using Container on AWS ###
+## Using Container on AWS ##
 
 
 ### Problems with Packer ###
@@ -46,9 +46,13 @@ docker-machine rm default
 docker-machine create -d virtualbox --virtualbox-disk-size "100000" default
 ```
 
-# Running with graphics (X server on windows Host) #
+docker build -t --rm icmpipeline .
+
+## Running with graphics (X server on windows Host) ##
+```
 docker run -it \
     -e DISPLAY=<IP.Address.For.VirtualBox.IPv4>:0
+```
 Also edit your X0.hosts file in Program Files\Xming\X0.hosts with admin privileges to include your docker toolbox ID. (Different from above!)
 
 #### Removing Containers ####
