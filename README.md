@@ -8,20 +8,22 @@ There are 4 branches:
 - **ami_aws:** Using packer to build an AMI
 - **docker:** Using packer to build a container with docker toolbox
 
-## docker.io/lyoganathan/icmpipeline
+## docker.io/lyoganathan/icm
 
 Current Software:
 - Freesurfer 6.0
 - FSL 5.0
 - ITK Snap
 - mricron
+- MIPAV, JIST, CBS tools, TOADS CRUISE & JIST CRUISE
+
 
 ## How to run Container ##
 
 - Install Docker or Docker Toolbox. If on windows and not Windows 10 enterprise/professional, you will have to get Docker Toolbox, which works fine for me. I think the difference is docker toolbox requires virtualbox, wheres Docker uses Hyper-V.
 - Download the container: if you do
 ```
-docker run lyoganathan/icmpipeline:v2
+docker run lyoganathan/icm:mipav
 ```
 it should download the container locally.
 
@@ -50,11 +52,15 @@ docker build -t --rm icmpipeline .
 
 ## Running with graphics (X server on windows Host) ##
 ```
-docker run -it \
+docker run -it <Container.Name> \
     -e DISPLAY=<IP.Address.For.VirtualBox.IPv4>:0
 ```
-Also edit your X0.hosts file in Program Files\Xming\X0.hosts with admin privileges to include your docker toolbox ID. (Different from above!)
+Also edit your X0.hosts file in Program Files\Xming\X0.hosts with admin privileges to include your docker toolbox ID. (Different from above!). Check with
 
+```
+docker-machine ip
+```
 #### Removing Containers ####
 docker rm $(docker ps -a -f status=exited -q)
 #### Removing Images ####
+docker rmi image
