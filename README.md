@@ -8,9 +8,10 @@ There are 4 branches:
 - **ami_aws:** Using packer to build an AMI
 - **docker:** Using Docker to build a container
 
-Download link:
+Download link full:
 [ICM_PIPELINE_FULL](https://drive.google.com/file/d/0B8U1bxkyNu87RWtnUU8xeUVldm8/view?usp=sharing)
-[ICM_MIPAV_ONLY](https://drive.google.com/file/d/1eHBeAGlnkcurZ55ZjWahemfpiEr_QMa3/view?usp=sharing)
+
+Download link MIPAV: [ICM_MIPAV_ONLY](https://drive.google.com/file/d/1eHBeAGlnkcurZ55ZjWahemfpiEr_QMa3/view?usp=sharing)
 
 Current Software:
 - Freesurfer 6.0
@@ -35,11 +36,11 @@ The mipav only .ova file is much smaller and has only MIPAV+JIST+CBStools etc.
 - Wait for it to finish importing & launch your Virtual Machine
 
 ## Installing Guest Additions and Shared Folders: ##
-1. With a launched VM, click on Devices -> Insert guest additions CD
+- With a launched VM, click on Devices -> Insert guest additions CD
 
 ![](imgs/3.JPG)
 
-2. You should automatically be prompted to install guest additions. If not automatically prompted run
+- You should automatically be prompted to install guest additions. If not automatically prompted run
 
 ```
 sudo mount /dev/cdrom /media
@@ -47,17 +48,18 @@ sudo sh /media/cdrom/VBoxLinuxAdditions.run
 ```
 
 ![](imgs/4.JPG)
-
-3. If installation fails, first try rebooting and reinstalling.
-4. Now for shared folders. Go to Device > Shared Folders
-
 ![](imgs/5.JPG)
 
-5. Add the path on your host machine that contains files you want to use on your VirtualBox machine.
+- If installation fails, first try rebooting and reinstalling.
+- Now for shared folders. Go to Device > Shared Folders
+
+
+
+- Add the path on your host machine that contains files you want to use on your VirtualBox machine.
 
 ![](imgs/6.JPG)
 
-6. Mount the shared folder using:
+- Mount the shared folder using:
 
 ```
 sudo mount -t vboxsf HostFoldername Virtualboxfolderpath
