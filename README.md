@@ -8,13 +8,9 @@ There are 4 branches:
 - **ami_aws:** Using packer to build an AMI
 - **docker:** Using packer to build a container with docker toolbox
 
-## docker.io/lyoganathan/icm
+## docker.io/lyoganathan/icm:mipav
 
 Current Software:
-- Freesurfer 6.0
-- FSL 5.0
-- ITK Snap
-- mricron
 - MIPAV, JIST, CBS tools, TOADS CRUISE & JIST CRUISE
 
 
